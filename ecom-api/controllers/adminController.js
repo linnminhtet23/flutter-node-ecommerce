@@ -1,25 +1,25 @@
-const User = require("../models/users");
+const Admin = require("../models/admins");
 const bycrypt = require("bcrypt");
 const generateToken = require("../utils/generateToken");
 
 require("dotenv").config();
 
-const getAllUsers = async (req, res) => {
+const getAllAdmins = async (req, res) => {
   try {
-    const userList = await User.find().sort("createdAt");
-    const count = await User.count();
+    const adminList = await Admin.find().sort("createdAt");
+    const count = await Admin.count();
 
-    res.status(200).json({ success: true, data: userList, total: count });
+    res.status(200).json({ success: true, data: adminList, total: count });
   } catch (error) {
     res.status(500).json({ success: false });
   }
 };
 
-const getUser = async (req, res) => {
+const getAdmin = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id);
-    res.status(200).send(user);
+    const admin = await Admin.findById(id);
+    res.status(200).send(admin);
   } catch (error) {
     res.status(500).json({ success: false });
   }
@@ -27,7 +27,7 @@ const getUser = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   res.send({
-    _id:req.user._id,
+    _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
     phone: req.user.phone,
@@ -39,26 +39,23 @@ const getUserProfile = async (req, res) => {
   });
 };
 
-const userSignUp = async (req, res) => {
-  const {
-    name,
-    email,
-    password,
-    phone,
-  } = req.body;
+const adminCreate = async (req, res) => {
+  let { name, role, password } = req.body;
 
   try {
+    const generatedPassword = Math.random() * 10000000;
+    password = generatedPassword;
     const hashedPassword = await bycrypt.hash(password, 10);
-    let user = new User({
+    let user = new Admin({
       name,
-      email,
-      phone,
+      role,
+      plainPassword:plainPassword,
       password: hashedPassword,
-     
     });
     user = await user.save();
     res.send(user);
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 };
@@ -100,10 +97,10 @@ const userSignOut = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
-  getUser,
+  getAllAdmins,
+  getAdmin,
   getUserProfile,
-  userSignUp,
+  adminCreate,
   userSignIn,
-  userSignOut
+  userSignOut,
 };

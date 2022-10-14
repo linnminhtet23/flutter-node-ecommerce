@@ -1,11 +1,20 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const morgan = require("morgan");
 const app = express();
 const errorHandler = require("./helpers/errorHandler");
 const listEndpoints = require("express-list-endpoints");
+const path = require("path") 
 
+//middle wares
+const cors = require("cors");
+const morgan = require("morgan");
+const helmet = require("helmet");
+
+//routes
 const userRouter = require("./routes/userRoute");
+const adminRouter = require("./routes/adminRoute");
+const promotionRouter = require("./routes/promotionRoute");
+
 require("dotenv").config();
 const router = express.Router();
 
@@ -16,6 +25,9 @@ const api = process.env.API_URL;
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(errorHandler);
+app.use(cors());
+app.use(helmet());
+app.use("/public/uploads", express.static(path.join(__dirname + "public/uploads")));
 
 //testing route
 // app.use("/",(req,res)=>{
@@ -24,6 +36,8 @@ app.use(errorHandler);
 
 //routes
 app.use(`${api}user`, userRouter);
+app.use(`${api}admins`, adminRouter)
+app.use(`${api}orders`, promotionRouter);
 
 //get all route
 if (app.get("env") === "development") {

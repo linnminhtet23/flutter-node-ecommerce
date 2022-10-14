@@ -5,6 +5,7 @@ const {
   userSignIn,
   getUser,
   getUserProfile,
+  userSignOut,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const signInSchema = require("../schema/User/signInSchema");
@@ -16,5 +17,6 @@ router.get("/:id", authMiddleware, getUser);
 router.get("/profile", authMiddleware, getUserProfile);
 router.post("/io-register", signUpSchema, userSignUp);
 router.post("/io-login", signInSchema, userSignIn);
+router.post("/logout", authMiddleware,userSignOut );
 
 module.exports = router;

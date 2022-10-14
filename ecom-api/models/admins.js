@@ -11,6 +11,10 @@ const adminSchema = new schema(
       type: String,
       require: true,
     },
+    plainPassword: {
+      type: String,
+      require: true,
+    },
     password: {
       type: String,
       require: true,
