@@ -18,21 +18,6 @@ const signUpSchema = [
     return true;
   }),
   body("phone").isMobilePhone().withMessage("Please fill your valid number"),
-  body("street")
-    .exists({ checkFalsy: null })
-    .withMessage("Please fill your street name"),
-  body("apartment")
-    .exists({ checkFalsy: null })
-    .withMessage("Please fill your apartment number"),
-  body("zip")
-    .exists({ checkFalsy: null })
-    .withMessage("Please fill your Zip or Postal code"),
-  body("city")
-    .exists({ checkFalsy: null })
-    .withMessage("Please fill your city name"),
-  body("country")
-    .exists({ checkFalsy: null })
-    .withMessage("Please fill your country name"),
 ];
 
 module.exports = signUpSchema;

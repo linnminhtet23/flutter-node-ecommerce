@@ -43,13 +43,13 @@ const adminCreate = async (req, res) => {
   let { name, role, password } = req.body;
 
   try {
-    const generatedPassword = Math.random() * 10000000;
-    password = generatedPassword;
+    const generatedPassword = Math.random() * 1000000;
+    password = Math.round(generatedPassword).toString();
     const hashedPassword = await bycrypt.hash(password, 10);
     let user = new Admin({
       name,
       role,
-      plainPassword:plainPassword,
+      plainPassword: password,
       password: hashedPassword,
     });
     user = await user.save();
@@ -60,25 +60,25 @@ const adminCreate = async (req, res) => {
   }
 };
 
-const userSignIn = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
+const adminSignIn = async (req, res) => {
+  const admin = await Admin.findOne({ name: req.body.name });
   try {
-    if (user) {
+    if (admin) {
       const samePassword = bycrypt.compareSync(
         req.body.password,
-        user.password
+        admin.password
       );
       if (samePassword) {
-        const token = await generateToken(user);
-        res.status(200).send({ name: user.name, token: token });
+        const token = await generateToken(admin);
+        res.status(200).send({ name: admin.name, token: token });
       } else {
-        res.status(401).send("Wrong Email and Password");
+        res.status(401).send("Invalid Credentials");
       }
     } else {
-      res.status(401).send("Wrong Email and Password");
+      res.status(401).send("Invalid Credentials");
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.sendStatus(500);
   }
 };
@@ -101,6 +101,6 @@ module.exports = {
   getAdmin,
   getUserProfile,
   adminCreate,
-  userSignIn,
+  adminSignIn,
   userSignOut,
 };
