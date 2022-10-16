@@ -25,18 +25,14 @@ const getAdmin = async (req, res) => {
   }
 };
 
-const getUserProfile = async (req, res) => {
-  res.send({
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    phone: req.user.phone,
-    street: req.user.street,
-    apartment: req.user.apartment,
-    zip: req.user.zip,
-    city: req.user.city,
-    country,
-  });
+const getAdminProfile = async (req, res) => {
+  console.log(req.admin)
+  // res.send({
+  //   _id: req.admin._id,
+  //   name: req.admin.name,
+  //   role: req.admin.role,
+  // });
+
 };
 
 const adminCreate = async (req, res) => {
@@ -99,7 +95,7 @@ const userSignOut = async (req, res) => {
 module.exports = {
   getAllAdmins,
   getAdmin,
-  getUserProfile,
+  getAdminProfile,
   adminCreate,
   adminSignIn,
   userSignOut,

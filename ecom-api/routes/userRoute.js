@@ -19,6 +19,6 @@ router.get("/:id", adminAuthMiddleware, adminMiddleware, getUser);
 router.get("/profile", authMiddleware, getUserProfile);
 router.post("/io-register", signUpSchema, userSignUp);
 router.post("/io-login", signInSchema, userSignIn);
-router.post("/logout", authMiddleware, userSignOut);
+router.post("/logout", authMiddleware,userSignOut );
 
 module.exports = router;

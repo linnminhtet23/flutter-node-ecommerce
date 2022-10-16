@@ -26,17 +26,18 @@ const getUser = async (req, res) => {
 };
 
 const getUserProfile = async (req, res) => {
-  res.send({
-    _id:req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    phone: req.user.phone,
-    street: req.user.street,
-    apartment: req.user.apartment,
-    zip: req.user.zip,
-    city: req.user.city,
-    country,
-  });
+  console.log(req.user);
+  // res.send({
+  //   _id:req.user._id,
+  //   name: req.user.name,
+  //   email: req.user.email,
+  //   phone: req.user.phone,
+  //   street: req.user.street,
+  //   apartment: req.user.apartment,
+  //   zip: req.user.zip,
+  //   city: req.user.city,
+  //   country: req.user.country,
+  // });
 };
 
 const userSignUp = async (req, res) => {

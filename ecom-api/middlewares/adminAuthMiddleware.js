@@ -17,7 +17,7 @@ const adminAuthMiddleware = async (req, res, next) => {
     req.token = token;
     next();
   } catch (error) {
-    res.sendStatus(401);
+    res.status(400).send("You are not authorized to access this endpoint");
   }
 };
 
