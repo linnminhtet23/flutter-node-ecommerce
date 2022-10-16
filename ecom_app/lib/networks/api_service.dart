@@ -4,7 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class ApiService {
   static Dio getApiHandler(String token, {bool isFormData = false}) {
     BaseOptions options = BaseOptions(
-      baseUrl: "http://192.168.99.108:3000/api/v1/",
+      baseUrl: "http://<your ip address>:3000/api/v1/",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
